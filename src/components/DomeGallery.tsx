@@ -5,7 +5,14 @@ import { useGesture } from '@use-gesture/react';
 import { DATA } from '@/data/resume';
 import './DomeGallery.css';
 
-// Preload and cache unique image URLs with small in-memory blobs
+type GalleryImage = { src: string; alt: string };
+
+const getOptimizedImageSrc = (src: string, width = 384, quality = 72) => {
+  if (!src || !src.startsWith('/')) return src;
+  return `/_next/image?url=${encodeURIComponent(src)}&w=${width}&q=${quality}`;
+};
+
+// Preload and cache unique image URLs.
 const imageCache = new Map<string, string>();
 function preloadImages(urls: string[]) {
   const unique = Array.from(new Set(urls));
@@ -81,7 +88,7 @@ function computeItemBaseRotation(offsetX: number, offsetY: number, sizeX: number
 }
 
 export default function DomeGallery({
-  images = DEFAULT_IMAGES as { src: string; alt: string }[],
+  images = DEFAULT_IMAGES as GalleryImage[],
   fit = 0.5,
   fitBasis = 'auto',
   minRadius = 600,
@@ -133,9 +140,15 @@ export default function DomeGallery({
 
   const items = useMemo(() => buildItems(images, segments), [images, segments]);
 
-  // Preload unique images on mount
+  // Warm only the front-facing thumbnails first. Loading every full-size photo at
+  // once makes the gallery feel slow on open, especially with large camera files.
   useEffect(() => {
-    const urls = items.map(it => it.src).filter(Boolean);
+    const urls = items
+      .filter(it => Math.abs(it.x) <= 9 && Math.abs(it.y) <= 5)
+      .map(it => getOptimizedImageSrc(it.src, 384, 72))
+      .filter(Boolean)
+      .slice(0, 8);
+
     preloadImages(urls);
   }, [items]);
 
@@ -483,7 +496,7 @@ export default function DomeGallery({
       overlay.style.willChange = 'transform, opacity';
       overlay.style.transformOrigin = 'top left';
       overlay.style.transition = `transform ${enlargeTransitionMs}ms ease, opacity ${enlargeTransitionMs}ms ease`;
-      const rawSrc = parent.dataset.src || (el.querySelector('img') as HTMLImageElement)?.src || '';
+      const rawSrc = parent.dataset.fullSrc || parent.dataset.src || (el.querySelector('img') as HTMLImageElement)?.src || '';
       const img = document.createElement('img');
       img.src = rawSrc;
       overlay.appendChild(img);
@@ -591,6 +604,7 @@ export default function DomeGallery({
                 key={`${it.x},${it.y},${i}`}
                 className="item"
                 data-src={it.src}
+                data-full-src={getOptimizedImageSrc(it.src || DATA.avatarUrl, 1080, 78)}
                 data-offset-x={it.x}
                 data-offset-y={it.y}
                 data-size-x={it.sizeX}
@@ -610,17 +624,17 @@ export default function DomeGallery({
                   onClick={onTileClick}
                   onPointerUp={onTilePointerUp}
                 >
-                  <img 
+                  <img
                     alt={it.alt || DATA.name} 
-                    src={it.src || DATA.avatarUrl} 
+                    src={getOptimizedImageSrc(it.src || DATA.avatarUrl, 384, 72)}
                     className="w-full h-full object-cover object-top drop-shadow-2xl" 
                     draggable={false}
-                    loading="lazy"
+                    loading={Math.abs(it.x) <= 9 && Math.abs(it.y) <= 5 ? 'eager' : 'lazy'}
                     decoding="async"
                     width={200}
                     height={200}
                     // @ts-ignore
-                    fetchpriority="low"
+                    fetchpriority={Math.abs(it.x) <= 9 && Math.abs(it.y) <= 5 ? 'high' : 'low'}
                   />
                 </div>
               </div>

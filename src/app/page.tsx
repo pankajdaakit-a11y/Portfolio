@@ -59,6 +59,27 @@ import {
   ChevronDown,
 } from "lucide-react";
 
+const GALLERY_IMAGES = [
+  { src: "/images/p1.jpeg", alt: "Photo 1" },
+  { src: "/images/p2.jpeg", alt: "Photo 2" },
+  { src: "/images/p3.jpg", alt: "Photo 3" },
+  { src: "/images/p4.jpg", alt: "Photo 4" },
+  { src: "/images/p5.jpg", alt: "Photo 5" },
+  { src: "/images/p6.jpg", alt: "Photo 6" },
+  { src: "/images/p7.jpg", alt: "Photo 7" },
+  { src: "/images/p8.jpg", alt: "Photo 8" },
+  { src: "/images/p9.jpg", alt: "Photo 9" },
+  { src: "/images/p10.jpg", alt: "Photo 10" },
+  { src: "/images/p11.jpg", alt: "Photo 11" },
+  { src: "/images/p12.jpg", alt: "Photo 12" },
+  { src: "/images/p13.jpg", alt: "Photo 13" },
+  { src: "/images/p14.jpg", alt: "Photo 14" },
+  { src: "/images/p15.jpg", alt: "Photo 15" },
+  { src: "/images/p16.jpg", alt: "Photo 16" },
+  { src: "/images/p17.jpg", alt: "Photo 17" },
+  { src: "/images/p18.jpeg", alt: "Photo 18" },
+];
+
 export default function Page() {
   const [isSkillsDrawerOpen, setIsSkillsDrawerOpen] = React.useState(false);
   const [activeSkillCategory, setActiveSkillCategory] = React.useState<string | null>(null);
@@ -74,22 +95,31 @@ export default function Page() {
     setIsSkillsDrawerOpen(true);
   };
 
+  const copyContact = async (value: string, label: string) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      toast.success(`${label} copied`);
+    } catch {
+      toast.error(`Could not copy ${label.toLowerCase()}`);
+    }
+  };
+
   const MailIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect x="2" y="4" width="20" height="16" rx="2" />
-    <path d="M22 7L13.03 12.7a2 2 0 0 1-2.06 0L2 7" />
-  </svg>
-);
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="M22 7L13.03 12.7a2 2 0 0 1-2.06 0L2 7" />
+    </svg>
+  );
 
 
   return (
@@ -120,15 +150,15 @@ export default function Page() {
                     <div className="space-y-4 w-full">
                       <div className="flex flex-col items-center sm:items-start gap-1 w-full">
                         <h1 className="text-4xl sm:text-7xl lg:text-7xl font-black tracking-tighter text-foreground leading-[1.1] text-center sm:text-left w-full">
-              <span className="block italic sm:not-italic">
-                Hi, I am {DATA.name}{" "}
-                <span
-                  className="inline-block origin-[70%_70%] animate-[wave_650ms_ease-in-out_3] hover:animate-[wave_650ms_ease-in-out_1]"
-                  aria-hidden="true"
-                >
-                  👋
-                </span>
-              </span>
+                          <span className="block italic sm:not-italic">
+                            Hi, I am {DATA.name}{" "}
+                            <span
+                              className="inline-block origin-[70%_70%] animate-[wave_650ms_ease-in-out_3] hover:animate-[wave_650ms_ease-in-out_1]"
+                              aria-hidden="true"
+                            >
+                              👋
+                            </span>
+                          </span>
                           <span className="block lg:inline">
                             A Software Tinkerer
                           </span>
@@ -179,7 +209,7 @@ export default function Page() {
                         whileTap={{ scale: 0.95 }}
                         className="flex-1 sm:flex-none"
                       >
-                        <Button asChild size="default" className="group rounded-full w-full py-3 px-5 text-lg sm:px-8 font-black shadow-xl shadow-orange-500/20 bg-[#f97015] text-white hover:bg-[#f97015]/90 hover:shadow-orange-500/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#f97015]/40 focus-visible:ring-offset-2 cursor-pointer h-full sm:h-12 text-[10px] sm:text-base transition-all duration-300 ease-out">
+                        <Button asChild size="default" className="group rounded-full w-full py-3 px-5 text-lg sm:px-8 lg:px-10 font-black shadow-xl shadow-orange-500/20 bg-[#f97015] text-white hover:bg-[#f97015]/90 hover:shadow-orange-500/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#f97015]/40 focus-visible:ring-offset-2 cursor-pointer h-full sm:h-12 lg:h-14 text-[10px] sm:text-base lg:text-lg transition-all duration-300 ease-out">
                           <Link
                             href="https://drive.google.com/file/d/1Cbbx05lspTunaePTrem1YZq6MZ_rHZAJ/view?usp=sharing"
                             target="_blank"
@@ -188,9 +218,9 @@ export default function Page() {
                               startLoading(1500);
                               toast.success("Opening Resume...");
                             }}
-                            className="flex items-center justify-center gap-1.5"
+                            className="flex items-center justify-center gap-1.5 lg:gap-2"
                           >
-                            Hire Me <Download className="size-3 sm:size-5 transition-transform duration-300 group-hover:translate-y-0.5" />
+                            Hire Me <Download className="size-3 sm:size-5 lg:size-6 transition-transform duration-300 group-hover:translate-y-0.5" />
                           </Link>
                         </Button>
                       </motion.div>
@@ -207,10 +237,10 @@ export default function Page() {
                       >
                         <Button
                           size="default"
-                          className="group rounded-full w-full px-3 sm:px-8 font-black h-full py-3 sm:h-12 text-[10px] sm:text-base bg-transparent text-[#f97015] border-2 border-[#f97015]/40 hover:bg-[#f97015]/8 hover:border-[#f97015]/70 hover:shadow-lg hover:shadow-orange-500/10 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#f97015]/30 focus-visible:ring-offset-2 transition-all duration-300 ease-out flex items-center justify-center gap-1.5"
+                          className="group rounded-full w-full px-3 sm:px-8 lg:px-10 font-black h-full py-3 sm:h-12 lg:h-14 text-[10px] sm:text-base lg:text-lg bg-transparent text-[#f97015] border-2 border-[#f97015]/40 hover:bg-[#f97015]/8 hover:border-[#f97015]/70 hover:shadow-lg hover:shadow-orange-500/10 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#f97015]/30 focus-visible:ring-offset-2 transition-all duration-300 ease-out flex items-center justify-center gap-1.5 lg:gap-2"
                           onClick={() => setShowFullGallery(true)}
                         >
-                          <Layout className="size-3 sm:size-5 transition-transform duration-300 group-hover:rotate-3 group-hover:scale-110" /> Gallery
+                          <Layout className="size-3 sm:size-5 lg:size-6 transition-transform duration-300 group-hover:rotate-3 group-hover:scale-110" /> Gallery
                         </Button>
                       </motion.div>
                     </motion.div>
@@ -223,7 +253,11 @@ export default function Page() {
                     >
                       <Link
                         href={`mailto:${DATA.contact.email}`}
-                        className="flex items-center gap-2 group transition-all duration-300"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          copyContact(DATA.contact.email, "Email");
+                        }}
+                        className="flex items-center gap-2 group transition-all duration-300 cursor-copy"
                       >
                         <div className="p-1.5 sm:p-2 rounded-xl bg-red-500/10 text-red-500 group-hover:scale-110 group-hover:bg-red-500/20 transition-all">
                           <Mail className="size-3.5 sm:size-4" />
@@ -237,7 +271,11 @@ export default function Page() {
 
                       <Link
                         href={`tel:${DATA.contact.tel.replace(/\s+/g, '')}`}
-                        className="flex items-center gap-2 group transition-all duration-300"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          copyContact(DATA.contact.tel, "Contact");
+                        }}
+                        className="flex items-center gap-2 group transition-all duration-300 cursor-copy"
                       >
                         <div className="p-1.5 sm:p-2 rounded-xl bg-blue-500/10 text-blue-500 group-hover:scale-110 group-hover:bg-blue-500/20 transition-all">
                           <Phone className="size-3.5 sm:size-4" />
@@ -282,10 +320,10 @@ export default function Page() {
                         transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
                         className="relative size-48 rounded-full shadow-[0_0_50px_rgba(59,130,246,0.3)] border-4 border-background/50 overflow-hidden group/avatar"
                       >
-                        <img 
-                          src="/avatar.png" 
-                          alt="Pankaj Avatar" 
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover/avatar:scale-110" 
+                        <img
+                          src="/avatar.png"
+                          alt="Pankaj Avatar"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover/avatar:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-60" />
                       </motion.div>
@@ -602,11 +640,18 @@ export default function Page() {
                       <span className="text-xs sm:text-sm mt-2 block opacity-80">
                         Looking for freelancing services? Visit <a href="https://pvcode1u.ai" target="_blank" className="text-primary font-bold hover:underline hover:text-primary/80 hover:text-lg">pvcode1u.ai</a>
                       </span>
-                    </p>                      
+                    </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
                       <Button asChild className="rounded-full bg-[#f97015] hover:bg-[#f97015]/90 text-white px-8 py-6 font-black shadow-lg shadow-orange-500/20 group/email">
-                      
-                        <Link href={`mailto:${DATA.contact.email}`} className="flex items-center gap-2 text-[10px] sm:text-base">
+
+                        <Link
+                          href={`mailto:${DATA.contact.email}`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            copyContact(DATA.contact.email, "Email");
+                          }}
+                          className="flex items-center gap-2 text-[10px] sm:text-base cursor-copy"
+                        >
                           <MailIcon />
                           Email Me
                         </Link>
@@ -696,26 +741,7 @@ export default function Page() {
               >
                 <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_100px_rgba(0,0,0,0.8)]" />
                 <DomeGallery
-                  images={[
-                    { src: "/images/p1.jpeg", alt: "Photo 1" },
-                    { src: "/images/p2.jpeg", alt: "Photo 2" },
-                    { src: "/images/p3.jpg", alt: "Photo 3" },
-                    { src: "/images/p4.jpg", alt: "Photo 4" },
-                    { src: "/images/p5.jpg", alt: "Photo 5" },
-                    { src: "/images/p6.jpg", alt: "Photo 6" },
-                    { src: "/images/p7.jpg", alt: "Photo 7" },
-                    { src: "/images/p8.jpg", alt: "Photo 8" },
-                    { src: "/images/p9.jpg", alt: "Photo 9" },
-                    { src: "/images/p10.jpg", alt: "Photo 10" },
-                    { src: "/images/p11.jpg", alt: "Photo 11" },
-                    { src: "/images/p12.jpg", alt: "Photo 12" },
-                    { src: "/images/p13.jpg", alt: "Photo 13" },
-                    { src: "/images/p14.jpg", alt: "Photo 14" },
-                    { src: "/images/p15.jpg", alt: "Photo 15" },
-                    { src: "/images/p16.jpg", alt: "Photo 16" },
-                    { src: "/images/p17.jpg", alt: "Photo 17" },
-                    { src: "/images/p18.jpeg", alt: "Photo 18" },
-                  ]}
+                  images={GALLERY_IMAGES}
                   fit={galleryZoom}
                   minRadius={400}
                   maxVerticalRotationDeg={15}
