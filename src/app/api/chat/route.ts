@@ -70,6 +70,58 @@ function localAnswer(questionRaw: string) {
   );
 }
 
+function cleanLocalAnswer(questionRaw: string) {
+  const question = questionRaw.trim();
+  const lower = question.toLowerCase();
+
+  const fallbackText =
+    `Hi! I'm ${DATA.name}'s portfolio assistant.\n\n` +
+    `Ask me anything about my work, projects, learning journey, or professional approach to building products.`;
+
+  if (!question) return fallbackText;
+
+  if (lower.includes("why") && lower.includes("hire")) {
+    return (
+      `You should hire ${DATA.name} because I blend fast execution with clean engineering.\n\n` +
+      `- **Strengths**: full-stack delivery, modern UI, performance, and AI integration\n` +
+      `- **Mindset**: ownership, clarity, and consistent shipping\n` +
+      `- **Focus**: practical solutions that help users and business outcomes`
+    );
+  }
+
+  if (lower.includes("life") || lower.includes("journey") || lower.includes("brain") || lower.includes("mindset")) {
+    return (
+      `My approach ("my brain"):\n` +
+      `- I break problems into small systems, ship iterations, then improve.\n` +
+      `- I optimize for clarity: simple architecture, readable code, measurable results.\n` +
+      `- I learn in public and use projects as proof.\n\n` +
+      `Try asking: "What are you building right now?" or "How do you learn fast?"`
+    );
+  }
+
+  if (lower.includes("contact") || lower.includes("email") || lower.includes("reach")) {
+    return (
+      `Contact me here:\n\n` +
+      `- **Email**: ${DATA.contact.email}\n` +
+      `- **Phone**: ${DATA.contact.tel}\n` +
+      `- **GitHub**: ${DATA.contact.social.GitHub?.url}\n` +
+      `- **LinkedIn**: ${DATA.contact.social.LinkedIn?.url}`
+    );
+  }
+
+  const latest = (DATA as any).projects?.[0];
+  if (lower.includes("project") && latest) {
+    return `A recent featured project: **${latest.title}** - ${latest.description}`;
+  }
+
+  return (
+    `You asked: "${question}".\n\n` +
+    `I can answer about my experience, projects, AI building, learning process, and professional journey.\n` +
+    `For freelancing inquiries, please visit pvcode1u.ai.\n` +
+    `Try: "Tell me about your latest project" or "How do you think about building products?"`
+  );
+}
+
 export async function POST(req: Request) {
   try {
     const body = (await req.json().catch(() => null)) as
@@ -96,7 +148,7 @@ export async function POST(req: Request) {
     // If there's no message, return a friendly default.
     if (!lastMessage.trim()) {
       return NextResponse.json({
-        text: localAnswer(""),
+        text: cleanLocalAnswer(""),
       });
     }
 
@@ -124,7 +176,7 @@ export async function POST(req: Request) {
 
     // Always-available free fallback (or user-selected)
     if (modelId === "local") {
-      const text = localAnswer(lastMessage);
+      const text = cleanLocalAnswer(lastMessage);
       await logToSupabase({
         question: lastMessage,
         answer: text,
@@ -139,7 +191,7 @@ export async function POST(req: Request) {
       // Google Gemini
       const apiKey = process.env.GEMINI_API_KEY;
       if (!apiKey) {
-        const text = localAnswer(lastMessage);
+        const text = cleanLocalAnswer(lastMessage);
         await logToSupabase({
           question: lastMessage,
           answer: text,
@@ -180,7 +232,7 @@ export async function POST(req: Request) {
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
         console.error("Gemini API Error:", data);
-        const text = localAnswer(lastMessage);
+        const text = cleanLocalAnswer(lastMessage);
         await logToSupabase({
           question: lastMessage,
           answer: text,
@@ -194,7 +246,7 @@ export async function POST(req: Request) {
 
       const text =
         data.candidates?.[0]?.content?.parts?.[0]?.text ||
-        localAnswer(lastMessage);
+        cleanLocalAnswer(lastMessage);
       await logToSupabase({
         question: lastMessage,
         answer: text,
@@ -209,7 +261,7 @@ export async function POST(req: Request) {
       // Groq (Llama 3)
       const apiKey = process.env.GROQ_API_KEY;
       if (!apiKey) {
-        const text = localAnswer(lastMessage);
+        const text = cleanLocalAnswer(lastMessage);
         await logToSupabase({
           question: lastMessage,
           answer: text,
@@ -239,7 +291,7 @@ export async function POST(req: Request) {
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
         console.error("Groq API Error:", data);
-        const text = localAnswer(lastMessage);
+        const text = cleanLocalAnswer(lastMessage);
         await logToSupabase({
           question: lastMessage,
           answer: text,
@@ -251,7 +303,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ text });
       }
 
-      const text = data.choices?.[0]?.message?.content || localAnswer(lastMessage);
+      const text = data.choices?.[0]?.message?.content || cleanLocalAnswer(lastMessage);
       await logToSupabase({
         question: lastMessage,
         answer: text,
@@ -266,7 +318,7 @@ export async function POST(req: Request) {
       // OpenAI (optional; may not be free)
       const apiKey = process.env.OPENAI_API_KEY;
       if (!apiKey) {
-        const text = localAnswer(lastMessage);
+        const text = cleanLocalAnswer(lastMessage);
         await logToSupabase({
           question: lastMessage,
           answer: text,
@@ -296,7 +348,7 @@ export async function POST(req: Request) {
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
         console.error("OpenAI API Error:", data);
-        const text = localAnswer(lastMessage);
+        const text = cleanLocalAnswer(lastMessage);
         await logToSupabase({
           question: lastMessage,
           answer: text,
@@ -308,7 +360,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ text });
       }
 
-      const text = data.choices?.[0]?.message?.content || localAnswer(lastMessage);
+      const text = data.choices?.[0]?.message?.content || cleanLocalAnswer(lastMessage);
       await logToSupabase({
         question: lastMessage,
         answer: text,
@@ -321,7 +373,7 @@ export async function POST(req: Request) {
 
     // Unknown modelId -> fall back locally (never break chat)
     {
-      const text = localAnswer(lastMessage);
+      const text = cleanLocalAnswer(lastMessage);
       await logToSupabase({
         question: lastMessage,
         answer: text,

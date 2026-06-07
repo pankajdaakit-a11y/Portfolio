@@ -168,17 +168,17 @@ export const DATA = {
       end: "Present",
       description: "Optimizing logistics platform efficiency and architecting scalable backend solutions. Focused on streamlining supply chain workflows, improving data processing pipelines, and delivering high-performance features for logistics operations.",
     },
-    {
-      company: "Quality Concept Welding Solutions Pvt. Ltd.",
-      href: "https://qualityconcept.in/",
-      badges: ["Full-time"],
-      location: "Greater Noida",
-      title: "Full Stack Developer (CRM Platform)",
-      logoUrl: "/Qc_logo.png",
-      start: "Jan 2026",
-      end: " 25 March 2026",
-      description: "Independently developing and managing a multi-module CRM system using MERN stack. Built modules including Environmental Survey, Accounts, Admin & HR, Industrial Safety, Inventory Management, ISO Certifications, Marketing, NDT Services, PWHT Services. Developed scalable REST APIs, implemented RBAC, and optimized dashboards for performance.",
-    },
+    // {
+    //   company: "Quality Concept Welding Solutions Pvt. Ltd.",
+    //   href: "https://qualityconcept.in/",
+    //   badges: ["Full-time"],
+    //   location: "Greater Noida",
+    //   title: "Full Stack Developer (CRM Platform)",
+    //   logoUrl: "/Qc_logo.png",
+    //   start: "Jan 2026",
+    //   end: " 25 March 2026",
+    //   description: "Independently developing and managing a multi-module CRM system using MERN stack. Built modules including Environmental Survey, Accounts, Admin & HR, Industrial Safety, Inventory Management, ISO Certifications, Marketing, NDT Services, PWHT Services. Developed scalable REST APIs, implemented RBAC, and optimized dashboards for performance.",
+    // },
     {
       company: "Websbaba Technologies Pvt. Ltd.",
       href: "https://websbaba.in/",
@@ -186,8 +186,8 @@ export const DATA = {
       location: "Lucknow, India (Hybrid)",
       title: "Full Stack Developer (Real Estate Platform)",
       logoUrl: "/webs_baba_logo.png",
-      start: "Oct 2025",
-      end: "Dec 2025",
+      start: "Apr 2025", 
+      end: "Mar 2026",
       description: "Developed MERN dashboards with role-based access. Integrated Razorpay payments, auto-invoicing, and lead distribution. Improved frontend UI/UX and backend API efficiency.",
     },
     {
@@ -197,8 +197,8 @@ export const DATA = {
       location: "Lucknow, India (Hybrid)",
       title: "Full Stack Developer Intern",
       logoUrl: "/waterloo.jpg",
-      start: "Dec 2024",
-      end: "May 2025",
+      start: "Jan 2025",
+      end: "Mar 2025",
       description: "Developed MERN features and integrated REST APIs. Enhanced UI/UX performance and responsiveness. Implemented Stripe Connect payments and payout systems.",
     },
   ],
@@ -345,14 +345,25 @@ export const DATA = {
     },
   ],
   certifications: [
-    {
-      title: "MERN Stack Certification",
-      issuer: "PW Skills",
-      date: "2024",
-      description: "Advanced certification in MERN Stack development, covering MongoDB, Express, React, and Node.js.",
+      {
+      title: "Full Stack Web Development 2.0",
+      issuer: "Physics Wallah (PW Skills)",
+      date: "August 2024",
+      credentialId: "25e3858b-4824-4093-8f6e-063c4fe5b517",
+      url: "https://drive.google.com/file/d/1cI--xq4WYC2Z7oSkOxLMk19bMcd7AVIa/view?usp=sharing",
+      description: "Successfully completed comprehensive full-stack web development program covering modern web technologies including MERN stack, REST APIs, authentication, and deployment strategies.",
+      skills: [
+        "React.js", "Node.js", "Express.js", "MongoDB", "REST APIs",
+        "JWT Authentication", "Redux", "Tailwind CSS", "Git & GitHub",
+        "Deployment", "CI/CD Concepts"
+      ],
       status: "completed",
-      image: "/CertificateAll/PW-certification-MERN.png"
+      type: "professional",
+      duration: "3+ months",
+      verified: true,
+      badgeColor: "bg-orange-500/10 border-orange-500/20"
     },
+   
     {
       title: "Full Stack Development Webinar",
       issuer: "Shri Balaji Infotech",
@@ -407,24 +418,7 @@ export const DATA = {
       verified: false,
       badgeColor: "bg-yellow-500/10 border-yellow-500/20"
     },
-    {
-      title: "Full Stack Web Development 2.0",
-      issuer: "Physics Wallah (PW Skills)",
-      date: "August 2024",
-      credentialId: "25e3858b-4824-4093-8f6e-063c4fe5b517",
-      url: "https://drive.google.com/file/d/1cI--xq4WYC2Z7oSkOxLMk19bMcd7AVIa/view?usp=sharing",
-      description: "Successfully completed comprehensive full-stack web development program covering modern web technologies including MERN stack, REST APIs, authentication, and deployment strategies.",
-      skills: [
-        "React.js", "Node.js", "Express.js", "MongoDB", "REST APIs",
-        "JWT Authentication", "Redux", "Tailwind CSS", "Git & GitHub",
-        "Deployment", "CI/CD Concepts"
-      ],
-      status: "completed",
-      type: "professional",
-      duration: "3+ months",
-      verified: true,
-      badgeColor: "bg-orange-500/10 border-orange-500/20"
-    },
+  
     {
       title: "C, C++ & Data Structures and Algorithms",
       issuer: "iNeuron Intelligence Pvt. Ltd.",
@@ -442,7 +436,15 @@ export const DATA = {
       duration: "4+ months",
       verified: true,
       badgeColor: "bg-orange-500/10 border-orange-500/20"
-    }
+    },
+     {
+      title: "MERN Stack Certification",
+      issuer: "PW Skills",
+      date: "2024",
+      description: "Advanced certification in MERN Stack development, covering MongoDB, Express, React, and Node.js.",
+      status: "completed",
+      image: "/CertificateAll/PW-certification-MERN.png"
+    },
   ],
 
 

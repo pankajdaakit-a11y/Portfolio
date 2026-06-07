@@ -211,9 +211,9 @@ export function Header() {
         </div>
 
         {/* Right: Theme toggle only */}
-        <div className="pl-0.5 sm:pl-2 border-l border-border/50 flex items-center">
+        {/* <div className="pl-0.5 sm:pl-2 border-l border-border/50 flex items-center">
           <ModeToggle />
-        </div>
+        </div> */}
 
       </motion.nav>
 

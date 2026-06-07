@@ -62,17 +62,24 @@ const AI_MODELS = [
   { id: "kimi-k2.5", name: "Kimi", fullName: "Kimi K2.5", description: "Fast & Balanced", color: "text-blue-300", icon: "🌙" },
 ];
 
+const SUPPORTED_AI_MODELS = [
+  { id: "v1", name: "Gemini", fullName: "Gemini 1.5 Flash", description: "Fast portfolio answers", color: "text-blue-500", icon: "AI" },
+  { id: "v2", name: "Groq", fullName: "Llama 3.3 70B", description: "Quick reasoning", color: "text-emerald-500", icon: "GQ" },
+  { id: "v3", name: "OpenAI", fullName: "GPT-4o mini", description: "Balanced assistant", color: "text-purple-500", icon: "OA" },
+  { id: "local", name: "Local", fullName: "Offline fallback", description: "Works without API keys", color: "text-orange-500", icon: "PV" },
+];
+
 export default function AIChatbot() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
-  const [currentModel, setCurrentModel] = useState(AI_MODELS[0]);
+  const [currentModel, setCurrentModel] = useState(SUPPORTED_AI_MODELS[0]);
   const [isTyping, setIsTyping] = useState(false);
   const [showModelSelector, setShowModelSelector] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      text: `Hi! I'm **${DATA.name}'s AI Assistant**. How can I help you today? \n\nI can tell you about my **1.3+ years of experience**, skills in **React/Node.js**, or show you my latest projects!`,
+      text: `Hi! I'm **${DATA.name}'s AI Assistant**. How can I help you today? \n\nI can tell you about my **1.5+ years of experience**, skills in **React/Node.js**, or show you my latest projects!`,
       sender: "ai",
     },
   ]);
@@ -286,7 +293,7 @@ export default function AIChatbot() {
                       onClick={() => setShowModelSelector(!showModelSelector)}
                       className="flex items-center gap-1.5 px-3 py-2 bg-primary/10 hover:bg-primary/20 rounded-xl transition-all border border-transparent hover:border-primary/20 text-[11px] font-bold text-primary"
                     >
-                      <span className="text-sm">{currentModel.icon}</span>
+                      <span className="text-[10px] font-black">{currentModel.icon}</span>
                       <span className="hidden sm:inline">{currentModel.name}</span>
                       <ChevronDown className={cn("size-3 transition-transform duration-200", showModelSelector && "rotate-180")} />
                     </button>
@@ -305,11 +312,11 @@ export default function AIChatbot() {
                               Choose Your AI Brain
                             </p>
                             <p className="text-[10px] text-primary/60 font-black uppercase tracking-widest">
-                              19 active models available
+                              4 active modes available
                             </p>
                           </div>
                           <div className="max-h-[320px] overflow-y-auto pr-1 space-y-1 scrollbar-hide">
-                            {AI_MODELS.map((model) => (
+                            {SUPPORTED_AI_MODELS.map((model) => (
                               <button
                                 key={model.id}
                                 type="button"
@@ -322,7 +329,7 @@ export default function AIChatbot() {
                                   currentModel.id === model.id ? "bg-primary/20 text-primary" : "hover:bg-primary/5 text-foreground/60"
                                 )}
                               >
-                                <span className="text-xl group-hover:scale-110 transition-transform">{model.icon}</span>
+                                <span className={cn("w-7 shrink-0 text-center text-[10px] font-black group-hover:scale-110 transition-transform", model.color)}>{model.icon}</span>
                                 <div className="min-w-0">
                                   <div className="flex items-center gap-1.5">
                                     <p className="text-[11px] font-black leading-none">{model.name}</p>
@@ -365,7 +372,7 @@ export default function AIChatbot() {
                 <div className="flex items-center gap-2">
                    <div className="h-[1px] w-6 bg-primary/20" />
                    <p className="text-[10px] text-primary/60 font-black uppercase tracking-widest">
-                     19 High-Performace Nodes Active
+                     4 High-Performance Modes Active
                    </p>
                    <div className="h-[1px] w-6 bg-primary/20" />
                 </div>

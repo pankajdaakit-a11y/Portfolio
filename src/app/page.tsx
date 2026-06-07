@@ -74,6 +74,23 @@ export default function Page() {
     setIsSkillsDrawerOpen(true);
   };
 
+  const MailIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <rect x="2" y="4" width="20" height="16" rx="2" />
+    <path d="M22 7L13.03 12.7a2 2 0 0 1-2.06 0L2 7" />
+  </svg>
+);
+
 
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-12 md:space-y-28">
@@ -103,7 +120,15 @@ export default function Page() {
                     <div className="space-y-4 w-full">
                       <div className="flex flex-col items-center sm:items-start gap-1 w-full">
                         <h1 className="text-4xl sm:text-7xl lg:text-7xl font-black tracking-tighter text-foreground leading-[1.1] text-center sm:text-left w-full">
-                          <span className="block italic sm:not-italic">Hi, I am {DATA.name} 👋</span>
+              <span className="block italic sm:not-italic">
+                Hi, I am {DATA.name}{" "}
+                <span
+                  className="inline-block origin-[70%_70%] animate-[wave_650ms_ease-in-out_3] hover:animate-[wave_650ms_ease-in-out_1]"
+                  aria-hidden="true"
+                >
+                  👋
+                </span>
+              </span>
                           <span className="block lg:inline">
                             A Software Tinkerer
                           </span>
@@ -154,7 +179,7 @@ export default function Page() {
                         whileTap={{ scale: 0.95 }}
                         className="flex-1 sm:flex-none"
                       >
-                        <Button asChild size="default" className="rounded-full w-full px-3 sm:px-8 font-black shadow-xl shadow-orange-500/20 bg-[#f97015] text-white hover:bg-[#f97015]/90 cursor-pointer h-full sm:h-12 text-[10px] sm:text-base">
+                        <Button asChild size="default" className="group rounded-full w-full py-3 px-5 text-lg sm:px-8 font-black shadow-xl shadow-orange-500/20 bg-[#f97015] text-white hover:bg-[#f97015]/90 hover:shadow-orange-500/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#f97015]/40 focus-visible:ring-offset-2 cursor-pointer h-full sm:h-12 text-[10px] sm:text-base transition-all duration-300 ease-out">
                           <Link
                             href="https://drive.google.com/file/d/1Cbbx05lspTunaePTrem1YZq6MZ_rHZAJ/view?usp=sharing"
                             target="_blank"
@@ -165,7 +190,7 @@ export default function Page() {
                             }}
                             className="flex items-center justify-center gap-1.5"
                           >
-                            Hire Me <Download className="size-3 sm:size-5" />
+                            Hire Me <Download className="size-3 sm:size-5 transition-transform duration-300 group-hover:translate-y-0.5" />
                           </Link>
                         </Button>
                       </motion.div>
@@ -182,10 +207,10 @@ export default function Page() {
                       >
                         <Button
                           size="default"
-                          className="rounded-full w-full px-3 sm:px-8 font-black h-full sm:h-12 text-[10px] sm:text-base bg-transparent text-[#f97015] border-2 border-[#f97015]/40 hover:bg-[#f97015]/5 transition-transform flex items-center justify-center gap-1.5"
+                          className="group rounded-full w-full px-3 sm:px-8 font-black h-full py-3 sm:h-12 text-[10px] sm:text-base bg-transparent text-[#f97015] border-2 border-[#f97015]/40 hover:bg-[#f97015]/8 hover:border-[#f97015]/70 hover:shadow-lg hover:shadow-orange-500/10 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#f97015]/30 focus-visible:ring-offset-2 transition-all duration-300 ease-out flex items-center justify-center gap-1.5"
                           onClick={() => setShowFullGallery(true)}
                         >
-                          <Layout className="size-3 sm:size-5" /> Gallery
+                          <Layout className="size-3 sm:size-5 transition-transform duration-300 group-hover:rotate-3 group-hover:scale-110" /> Gallery
                         </Button>
                       </motion.div>
                     </motion.div>
@@ -427,8 +452,8 @@ export default function Page() {
                 <div className="space-y-8">
                   <div className="flex items-center justify-between border-b border-primary/10 pb-4">
                     <h2 className="text-xl sm:text-2xl font-black text-foreground uppercase tracking-tight">Work <span className="text-primary italic">History</span></h2>
-                    <Badge variant="secondary" className="bg-primary/10 text-primary font-bold text-[10px] sm:text-xs">
-                      1 year 3 months
+                    <Badge variant="secondary" className="bg-primary/10 text-primary font-bold text-[15px] sm:text-xs">
+                      1.5  year + experience
                     </Badge>
                   </div>
                   <div className="space-y-4">
@@ -563,7 +588,7 @@ export default function Page() {
                     viewport={{ once: true }}
                     className="space-y-6 relative z-10"
                   >
-                    <div className="inline-block rounded-full bg-primary text-primary-foreground px-6 py-1.5 text-[10px] font-black uppercase tracking-[0.3em]">
+                    <div className="inline-block rounded-full bg-primary text-primary-foreground px-6 py-1.5 text-[10px] font-bold uppercase tracking-[0.3em]">
                       Get In Touch
                     </div>
 
@@ -575,15 +600,18 @@ export default function Page() {
                       Let&apos;s architect the future together.
                       <br />
                       <span className="text-xs sm:text-sm mt-2 block opacity-80">
-                        Looking for freelancing services? Visit <a href="https://pvcode1u.ai" target="_blank" className="text-primary font-bold hover:underline">pvcode1u.ai</a>
+                        Looking for freelancing services? Visit <a href="https://pvcode1u.ai" target="_blank" className="text-primary font-bold hover:underline hover:text-primary/80 hover:text-lg">pvcode1u.ai</a>
                       </span>
-                    </p>                      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-                      <Button asChild className="rounded-full bg-[#f97015] hover:bg-[#f97015]/90 text-white px-8 font-black shadow-lg shadow-orange-500/20 group/email">
-                        <Link href={`mailto:${DATA.contact.email}`} className="flex items-center gap-2">
-                          ✉ Email Me
+                    </p>                      
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                      <Button asChild className="rounded-full bg-[#f97015] hover:bg-[#f97015]/90 text-white px-8 py-6 font-black shadow-lg shadow-orange-500/20 group/email">
+                      
+                        <Link href={`mailto:${DATA.contact.email}`} className="flex items-center gap-2 text-[10px] sm:text-base">
+                          <MailIcon />
+                          Email Me
                         </Link>
                       </Button>
-                      <Button asChild variant="outline" className="rounded-full border-[#f97015] text-[#f97015] px-8 font-black hover:bg-[#f97015]/5 transition-all group/freelance">
+                      <Button asChild variant="outline" className="rounded-full border-[#f97015] text-[#f97015] px-8 py-6 font-black hover:bg-[#f97015]/5 transition-all group/freelance text-[10px] sm:text-base">
                         <a href="https://pvcode1u.ai" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                           🚀 Freelance Inquiry
                         </a>
