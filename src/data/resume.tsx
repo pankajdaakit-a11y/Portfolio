@@ -11,8 +11,7 @@ export const DATA = {
   subtitle: "Building the future with Code",
   description: "I'm a web developer based in Delhi, India, blending aesthetics with problem-solving to craft seamless digital experiences.",
   summary:
-    "### What I’m About\n\nHey there, I’m Pankaj, a web developer passionate about building seamless and scalable digital experiences. My journey into the internet world started with curiosity and problem-solving, which eventually led me deep into web development, backend systems, and modern JavaScript frameworks.\n\nOver time, I’ve explored different areas of tech—from frontend design to backend logic—constantly learning and refining my skills to turn ideas into real, working products.\n\nBeyond coding, I enjoy exploring new technologies, improving my problem-solving skills through DSA, and sharing my learning journey. I’m always excited to build, experiment, and push my limits.\n\nScroll down to explore some of my work—I’d love to connect and collaborate on something meaningful.\n\nFeel free to reach out. Let’s build something amazing together. 🚀",
-
+  "Full Stack Web Developer passionate about building fast, scalable, and user-friendly web applications with the MERN stack. Always learning, solving problems, and creating impactful digital experiences. 🚀",
 
   avatarUrl: "/me.png",
   nowBuilding: [

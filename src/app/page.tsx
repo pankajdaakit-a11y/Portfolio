@@ -345,7 +345,7 @@ export default function Page() {
             </AnimeReveal>
 
 
-            {/* 2. About Section with Timeline */}
+              {/* 2. About Section with Timeline */}
             <AnimeReveal delay={200}>
               <section id="about" className="scroll-mt-16 px-4 max-w-4xl lg:max-w-6xl mx-auto w-full">
                 <div className="space-y-12">
@@ -404,6 +404,60 @@ export default function Page() {
               </section>
             </AnimeReveal>
 
+             
+
+              {/* 7.5 Work Experience */}
+            <AnimeReveal delay={400}>
+              <section id="work" className="scroll-mt-16 px-4 max-w-4xl lg:max-w-6xl mx-auto">
+                <div className="space-y-8">
+                  <div className="flex items-center justify-between border-b border-primary/10 pb-4">
+                    <h2 className="text-xl sm:text-2xl font-black text-foreground uppercase tracking-tight">Work <span className="text-primary italic">History</span></h2>
+                    <Badge variant="secondary" className="bg-primary/10 text-primary font-bold text-[15px] sm:text-xs">
+                      1.5  year + experience
+                    </Badge>
+                  </div>
+                  <div className="space-y-4">
+                    {DATA.work.map((work, id) => (
+                      <ResumeCard
+                        key={work.company}
+                        logoUrl={work.logoUrl}
+                        altText={work.company}
+                        title={work.company}
+                        subtitle={work.title}
+                        href={work.href}
+                        badges={work.badges}
+                        period={`${work.start} - ${work.end ?? "Present"}`}
+                        description={work.description}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </section>
+            </AnimeReveal>
+
+            {/* 6.5 Education (Integrated) */}
+            <AnimeReveal delay={450}>
+              <section id="education" className="scroll-mt-16 px-4 max-w-4xl lg:max-w-6xl mx-auto">
+                <div className="space-y-8">
+                  <h2 className="text-xl sm:text-2xl font-black text-foreground">Education</h2>
+                  <div className="space-y-4">
+                    {DATA.education.map((education, id) => (
+                      <ResumeCard
+                        key={education.school}
+                        href={education.href}
+                        logoUrl={education.logoUrl}
+                        altText={education.school}
+                        title={education.school}
+                        subtitle={education.degree}
+                        period={`${education.start} - ${education.end}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </section>
+            </AnimeReveal>
+
+          
 
             {/* 10. Certifications */}
             <AnimeReveal delay={250}>
@@ -484,56 +538,7 @@ export default function Page() {
 
 
 
-            {/* 7.5 Work Experience */}
-            <AnimeReveal delay={400}>
-              <section id="work" className="scroll-mt-16 px-4 max-w-4xl lg:max-w-6xl mx-auto">
-                <div className="space-y-8">
-                  <div className="flex items-center justify-between border-b border-primary/10 pb-4">
-                    <h2 className="text-xl sm:text-2xl font-black text-foreground uppercase tracking-tight">Work <span className="text-primary italic">History</span></h2>
-                    <Badge variant="secondary" className="bg-primary/10 text-primary font-bold text-[15px] sm:text-xs">
-                      1.5  year + experience
-                    </Badge>
-                  </div>
-                  <div className="space-y-4">
-                    {DATA.work.map((work, id) => (
-                      <ResumeCard
-                        key={work.company}
-                        logoUrl={work.logoUrl}
-                        altText={work.company}
-                        title={work.company}
-                        subtitle={work.title}
-                        href={work.href}
-                        badges={work.badges}
-                        period={`${work.start} - ${work.end ?? "Present"}`}
-                        description={work.description}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </section>
-            </AnimeReveal>
-
-            {/* 6.5 Education (Integrated) */}
-            <AnimeReveal delay={450}>
-              <section id="education" className="scroll-mt-16 px-4 max-w-4xl lg:max-w-6xl mx-auto">
-                <div className="space-y-8">
-                  <h2 className="text-xl sm:text-2xl font-black text-foreground">Education</h2>
-                  <div className="space-y-4">
-                    {DATA.education.map((education, id) => (
-                      <ResumeCard
-                        key={education.school}
-                        href={education.href}
-                        logoUrl={education.logoUrl}
-                        altText={education.school}
-                        title={education.school}
-                        subtitle={education.degree}
-                        period={`${education.start} - ${education.end}`}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </section>
-            </AnimeReveal>
+           
 
             {/* 7. Skills Section */}
             <AnimeReveal delay={350}>
