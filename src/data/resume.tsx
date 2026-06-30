@@ -53,11 +53,11 @@ export const DATA = {
     }
   ],
   timeline: [
-    { year: "2023", title: "Started Coding Journey", description: "Mastered HTML/CSS and basic Javascript.", icon: "CheckCircle2" },
-    { year: "2024", title: "MERN Stack Era", description: "Built 10+ full-stack projects using React, Node, and MongoDB.", icon: "Briefcase" },
-    { year: "2025", title: "Full Stack Developer", description: "Professional experience building scalable production apps.", icon: "CheckCircle2" },
-    { year: "2026", title: "Product Engineer", description: "Architecting high-performance cloud solutions.", icon: "Sparkles" }
-  ],
+  { year: "2023", title: "Started Coding Journey", description: "Mastered HTML/CSS and basic Javascript.", icon: "CheckCircle2" },
+  { year: "2024", title: "MERN Stack Era", description: "Built 10+ full-stack projects using React, Node, and MongoDB.", icon: "Briefcase" },
+  { year: "2025", title: "Full Stack Developer", description: "Professional experience building scalable production apps.", icon: "CheckCircle2" },
+  { year: "2026", title: "Software Engineer @ Daakit Technologies", description: "Optimizing logistics platform efficiency and architecting scalable backend solutions for supply chain operations.", icon: "Sparkles" }
+],
   skills: {
     "Backend & Architecture": {
       icon: "Server",
