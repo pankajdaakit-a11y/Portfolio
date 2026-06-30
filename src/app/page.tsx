@@ -290,7 +290,7 @@ export default function Page() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.6 }}
-                      className="flex items-center justify-center sm:justify-start flex-wrap gap-1.5 pt-2"
+                      className="hid  flex items-center justify-center sm:justify-start flex-wrap gap-1.5 pt-2"
                     >
                       {Object.entries(DATA.contact.social).map(([name, social]) => {
                         const Icon = (social as any).icon;
@@ -321,7 +321,7 @@ export default function Page() {
                         className="relative size-48 rounded-full shadow-[0_0_50px_rgba(59,130,246,0.3)] border-4 border-background/50 overflow-hidden group/avatar"
                       >
                         <img
-                          src="/avatar.png"
+                          src="/avatar.jpg"
                           alt="Pankaj Avatar"
                           className="w-full h-full object-cover transition-transform duration-500 group-hover/avatar:scale-110"
                         />
