@@ -36,19 +36,24 @@ async function logChat(payload: {
   ok: boolean;
   error?: string;
 }) {
-  const supabase = getSupabaseServerClient();
-  if (!supabase) return;
+  try {
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return;
 
-  const { error } = await supabase.from("chat_logs").insert({
-    conversation_id: payload.conversationId ?? null,
-    model_id: payload.modelId,
-    question: payload.question,
-    answer: payload.answer,
-    ok: payload.ok,
-    error: payload.error ?? null,
-  });
+    const { error } = await supabase.from("chat_logs").insert({
+      conversation_id: payload.conversationId ?? null,
+      model_id: payload.modelId,
+      question: payload.question,
+      answer: payload.answer,
+      ok: payload.ok,
+      error: payload.error ?? null,
+    });
 
-  if (error) console.error("Unable to log chat:", error.message);
+    if (error) console.error("Unable to log chat:", error.message);
+  } catch (error) {
+    // Analytics must never prevent the chat answer from reaching the visitor.
+    console.error("Unable to log chat:", error);
+  }
 }
 
 export async function POST(req: NextRequest) {
