@@ -63,9 +63,7 @@ const AI_MODELS = [
 ];
 
 const SUPPORTED_AI_MODELS = [
-  { id: "v1", name: "Gemini", fullName: "Gemini 1.5 Flash", description: "Fast portfolio answers", color: "text-blue-500", icon: "AI" },
-  { id: "v2", name: "Groq", fullName: "Llama 3.3 70B", description: "Quick reasoning", color: "text-emerald-500", icon: "GQ" },
-  { id: "v3", name: "OpenAI", fullName: "GPT-4o mini", description: "Balanced assistant", color: "text-purple-500", icon: "OA" },
+  { id: "v2", name: "Groq", fullName: "Llama 3.3 70B", description: "Gemini fallback included", color: "text-emerald-500", icon: "GQ" },
   { id: "local", name: "Local", fullName: "Offline fallback", description: "Works without API keys", color: "text-orange-500", icon: "PV" },
 ];
 
@@ -312,7 +310,7 @@ export default function AIChatbot() {
                               Choose Your AI Brain
                             </p>
                             <p className="text-[10px] text-primary/60 font-black uppercase tracking-widest">
-                              4 active modes available
+                              2 modes available
                             </p>
                           </div>
                           <div className="max-h-[320px] overflow-y-auto pr-1 space-y-1 scrollbar-hide">
@@ -367,12 +365,12 @@ export default function AIChatbot() {
               </form>
               <div className="flex flex-col items-center gap-1 mt-4">
                 <p className="text-[11px] font-black text-foreground/40 uppercase tracking-[0.15em] whitespace-nowrap">
-                   Build with Best Advanced Models
+                   Powered by Groq with Gemini fallback
                 </p>
                 <div className="flex items-center gap-2">
                    <div className="h-[1px] w-6 bg-primary/20" />
                    <p className="text-[10px] text-primary/60 font-black uppercase tracking-widest">
-                     4 High-Performance Modes Active
+                     Fast, reliable portfolio answers
                    </p>
                    <div className="h-[1px] w-6 bg-primary/20" />
                 </div>

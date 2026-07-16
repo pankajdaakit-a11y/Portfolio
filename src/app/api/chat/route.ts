@@ -1,391 +1,156 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { DATA } from "@/data/resume";
 import { getSupabaseServerClient } from "@/lib/supabase-server";
 
 type ChatMessage = {
   text: string;
-  sender?: "user" | "ai" | string;
+  sender?: "user" | "ai";
 };
 
-function toChatRole(sender?: string) {
-  if (sender === "ai") return "assistant";
-  return "user";
-}
+const MAX_MESSAGES = 12;
 
-function lastTurns(messages: ChatMessage[], maxTurns: number) {
-  // Keep the most recent turns (user/ai), in order.
-  const trimmed = messages.slice(-maxTurns);
-  return trimmed;
-}
-
-function localAnswer(questionRaw: string) {
-  const question = questionRaw.trim();
+function localAnswer(question: string) {
   const lower = question.toLowerCase();
 
-  const fallbackText =
-    `Hi! I'm ${DATA.name}'s portfolio assistant.\n\n` +
-    `Ask me anything about my work, projects, learning journey, or professional approach to building products.`;
-
-  if (!question) return fallbackText;
-
-  if (lower.includes("why") && lower.includes("hire")) {
-    return (
-      `You should hire ${DATA.name} because I blend fast execution with clean engineering.\n\n` +
-      `- **Strengths**: full‑stack delivery, modern UI, performance, and AI integration\n` +
-      `- **Mindset**: ownership, clarity, and consistent shipping\n` +
-      `- **Focus**: practical solutions that help users and business outcomes`
-    );
-  }
-
-  if (lower.includes("life") || lower.includes("journey") || lower.includes("brain") || lower.includes("mindset")) {
-    return (
-      `My approach (“my brain”):\n` +
-      `- I break problems into small systems, ship iterations, then improve.\n` +
-      `- I optimize for clarity: simple architecture, readable code, measurable results.\n` +
-      `- I learn in public and use projects as proof.\n\n` +
-      `If you want, ask: “What are you building right now?” or “How do you learn fast?”`
-    );
+  if (lower.includes("hire")) {
+    return `You should hire ${DATA.name} for full-stack delivery, polished modern UI, and a practical, ownership-driven approach to building products.`;
   }
 
   if (lower.includes("contact") || lower.includes("email") || lower.includes("reach")) {
-    return (
-      `Contact me here:\n\n` +
-      `- **Email**: ${DATA.contact.email}\n` +
-      `- **Phone**: ${DATA.contact.tel}\n` +
-      `- **GitHub**: ${DATA.contact.social.GitHub?.url}\n` +
-      `- **LinkedIn**: ${DATA.contact.social.LinkedIn?.url}`
-    );
+    return `You can reach ${DATA.name} at **${DATA.contact.email}** or through [LinkedIn](${DATA.contact.social.LinkedIn?.url}).`;
   }
 
-  const latest = (DATA as any).projects?.[0];
-  if (lower.includes("project") && latest) {
-    return `A recent featured project: **${latest.title}** — ${latest.description}`;
+  if (lower.includes("project")) {
+    const project = DATA.projects?.[0];
+    if (project) return `A featured project is **${project.title}** — ${project.description}`;
   }
 
-  return (
-    `You asked: “${question}”.\n\n` +
-    `I can answer about my experience, projects, AI building, learning process, and professional journey.\n` +
-    `If someone asks about freelancing services, politely inform them that this site is my professional resume for job opportunities, and for freelancing inquiries, they should visit pvcode1u.ai.\n` +
-    `Try: “Tell me about your latest project” or “How do you think about building products?”`
-  );
+  return `I'm ${DATA.name}'s portfolio assistant. Ask me about experience, skills, projects, or how to get in touch.`;
 }
 
-function cleanLocalAnswer(questionRaw: string) {
-  const question = questionRaw.trim();
-  const lower = question.toLowerCase();
+async function logChat(payload: {
+  conversationId?: string;
+  question: string;
+  answer: string;
+  modelId: string;
+  ok: boolean;
+  error?: string;
+}) {
+  const supabase = getSupabaseServerClient();
+  if (!supabase) return;
 
-  const fallbackText =
-    `Hi! I'm ${DATA.name}'s portfolio assistant.\n\n` +
-    `Ask me anything about my work, projects, learning journey, or professional approach to building products.`;
+  const { error } = await supabase.from("chat_logs").insert({
+    conversation_id: payload.conversationId ?? null,
+    model_id: payload.modelId,
+    question: payload.question,
+    answer: payload.answer,
+    ok: payload.ok,
+    error: payload.error ?? null,
+  });
 
-  if (!question) return fallbackText;
-
-  if (lower.includes("why") && lower.includes("hire")) {
-    return (
-      `You should hire ${DATA.name} because I blend fast execution with clean engineering.\n\n` +
-      `- **Strengths**: full-stack delivery, modern UI, performance, and AI integration\n` +
-      `- **Mindset**: ownership, clarity, and consistent shipping\n` +
-      `- **Focus**: practical solutions that help users and business outcomes`
-    );
-  }
-
-  if (lower.includes("life") || lower.includes("journey") || lower.includes("brain") || lower.includes("mindset")) {
-    return (
-      `My approach ("my brain"):\n` +
-      `- I break problems into small systems, ship iterations, then improve.\n` +
-      `- I optimize for clarity: simple architecture, readable code, measurable results.\n` +
-      `- I learn in public and use projects as proof.\n\n` +
-      `Try asking: "What are you building right now?" or "How do you learn fast?"`
-    );
-  }
-
-  if (lower.includes("contact") || lower.includes("email") || lower.includes("reach")) {
-    return (
-      `Contact me here:\n\n` +
-      `- **Email**: ${DATA.contact.email}\n` +
-      `- **Phone**: ${DATA.contact.tel}\n` +
-      `- **GitHub**: ${DATA.contact.social.GitHub?.url}\n` +
-      `- **LinkedIn**: ${DATA.contact.social.LinkedIn?.url}`
-    );
-  }
-
-  const latest = (DATA as any).projects?.[0];
-  if (lower.includes("project") && latest) {
-    return `A recent featured project: **${latest.title}** - ${latest.description}`;
-  }
-
-  return (
-    `You asked: "${question}".\n\n` +
-    `I can answer about my experience, projects, AI building, learning process, and professional journey.\n` +
-    `For freelancing inquiries, please visit pvcode1u.ai.\n` +
-    `Try: "Tell me about your latest project" or "How do you think about building products?"`
-  );
+  if (error) console.error("Unable to log chat:", error.message);
 }
 
-export async function POST(req: Request) {
-  try {
-    const body = (await req.json().catch(() => null)) as
-      | { messages?: ChatMessage[]; modelId?: string; conversationId?: string }
-      | null;
-    const messages = body?.messages ?? [];
-    const modelId = body?.modelId ?? "v1";
-    const conversationId = body?.conversationId ?? null;
+export async function POST(req: NextRequest) {
+  const body = (await req.json().catch(() => null)) as {
+    messages?: ChatMessage[];
+    modelId?: string;
+    conversationId?: string;
+  } | null;
+  const messages = body?.messages?.filter((message) => message?.text?.trim()).slice(-MAX_MESSAGES) ?? [];
+  const question = messages.at(-1)?.text?.trim() ?? "";
+  const modelId = body?.modelId ?? "v2";
+  const conversationId = body?.conversationId;
 
-    const systemPrompt =
-      `You are an AI Assistant for ${DATA.name}'s professional portfolio.\n` +
-      `You can answer ANY question, but you should anchor answers to ${DATA.name}'s real background when relevant.\n\n` +
-      `About me (ground truth data):\n` +
-      `${JSON.stringify(DATA, null, 2)}\n\n` +
-      `Guidelines:\n` +
-      `- Be friendly, confident, and helpful.\n` +
-      `- If asked about personal life/brain/mindset: describe my approach to learning, building, and professional growth.\n` +
-      `- If a question is unrelated or unknown: answer generally, then steer back to portfolio context.\n` +
-      `- Keep replies concise and structured.\n`;
+  if (!question) {
+    return NextResponse.json({ text: localAnswer("") });
+  }
 
-    const turns = lastTurns(messages, 12);
-    const lastMessage = turns[turns.length - 1]?.text ?? "";
+  if (modelId === "local") {
+    const text = localAnswer(question);
+    await logChat({ conversationId, question, answer: text, modelId, ok: true });
+    return NextResponse.json({ text });
+  }
 
-    // If there's no message, return a friendly default.
-    if (!lastMessage.trim()) {
-      return NextResponse.json({
-        text: cleanLocalAnswer(""),
-      });
-    }
+  const systemPrompt = `You are ${DATA.name}'s portfolio AI assistant. Answer questions about the portfolio accurately using this background data:\n${JSON.stringify(DATA)}\n\nBe concise, friendly, and professional. If information is not in the portfolio, say so rather than inventing it.`;
+  const chatMessages = messages.map((message) => ({
+    role: message.sender === "ai" ? "assistant" : "user",
+    content: message.text,
+  }));
 
-    const supabase = getSupabaseServerClient();
+  let groqError: string | undefined;
+  const groqKey = process.env.GROQ_API_KEY;
 
-    const logToSupabase = async (payload: {
-      question: string;
-      answer: string;
-      model_id: string;
-      conversation_id: string | null;
-      ok: boolean;
-      error?: string | null;
-    }) => {
-      if (!supabase) return;
-      // Table expected: chat_logs(conversation_id text, model_id text, question text, answer text, ok boolean, error text, created_at timestamptz default now())
-      await supabase.from("chat_logs").insert({
-        conversation_id: payload.conversation_id,
-        model_id: payload.model_id,
-        question: payload.question,
-        answer: payload.answer,
-        ok: payload.ok,
-        error: payload.error ?? null,
-      });
-    };
-
-    // Always-available free fallback (or user-selected)
-    if (modelId === "local") {
-      const text = cleanLocalAnswer(lastMessage);
-      await logToSupabase({
-        question: lastMessage,
-        answer: text,
-        model_id: modelId,
-        conversation_id: conversationId,
-        ok: true,
-      });
-      return NextResponse.json({ text });
-    }
-
-    if (modelId === "v1") {
-      // Google Gemini
-      const apiKey = process.env.GEMINI_API_KEY;
-      if (!apiKey) {
-        const text = cleanLocalAnswer(lastMessage);
-        await logToSupabase({
-          question: lastMessage,
-          answer: text,
-          model_id: modelId,
-          conversation_id: conversationId,
-          ok: false,
-          error: "Missing GEMINI_API_KEY",
-        });
-        return NextResponse.json({ text });
-      }
-
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [
-              {
-                role: "user",
-                parts: [
-                  {
-                    text:
-                      systemPrompt +
-                      "\n\nConversation so far:\n" +
-                      turns
-                        .map((m) => `${m.sender === "ai" ? "Assistant" : "User"}: ${m.text}`)
-                        .join("\n") +
-                      "\n\nAnswer as the assistant.",
-                  },
-                ],
-              },
-            ],
-          }),
-        }
-      );
-
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        console.error("Gemini API Error:", data);
-        const text = cleanLocalAnswer(lastMessage);
-        await logToSupabase({
-          question: lastMessage,
-          answer: text,
-          model_id: modelId,
-          conversation_id: conversationId,
-          ok: false,
-          error: `Gemini: ${data?.error?.message || "Unknown error"}`,
-        });
-        return NextResponse.json({ text });
-      }
-
-      const text =
-        data.candidates?.[0]?.content?.parts?.[0]?.text ||
-        cleanLocalAnswer(lastMessage);
-      await logToSupabase({
-        question: lastMessage,
-        answer: text,
-        model_id: modelId,
-        conversation_id: conversationId,
-        ok: true,
-      });
-      return NextResponse.json({ text });
-    }
-
-    if (modelId === "v2") {
-      // Groq (Llama 3)
-      const apiKey = process.env.GROQ_API_KEY;
-      if (!apiKey) {
-        const text = cleanLocalAnswer(lastMessage);
-        await logToSupabase({
-          question: lastMessage,
-          answer: text,
-          model_id: modelId,
-          conversation_id: conversationId,
-          ok: false,
-          error: "Missing GROQ_API_KEY",
-        });
-        return NextResponse.json({ text });
-      }
-
+  if (groqKey) {
+    try {
       const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
+          Authorization: `Bearer ${groqKey}`,
         },
         body: JSON.stringify({
           model: "llama-3.3-70b-versatile",
-          messages: [
-            { role: "system", content: systemPrompt },
-            ...turns.map((m) => ({ role: toChatRole(m.sender), content: m.text })),
-          ],
+          messages: [{ role: "system", content: systemPrompt }, ...chatMessages],
         }),
       });
-
       const data = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        console.error("Groq API Error:", data);
-        const text = cleanLocalAnswer(lastMessage);
-        await logToSupabase({
-          question: lastMessage,
-          answer: text,
-          model_id: modelId,
-          conversation_id: conversationId,
-          ok: false,
-          error: `Groq: ${data?.error?.message || "Unknown error"}`,
-        });
+      const text = data.choices?.[0]?.message?.content;
+
+      if (response.ok && text) {
+        await logChat({ conversationId, question, answer: text, modelId: "groq", ok: true });
         return NextResponse.json({ text });
       }
-
-      const text = data.choices?.[0]?.message?.content || cleanLocalAnswer(lastMessage);
-      await logToSupabase({
-        question: lastMessage,
-        answer: text,
-        model_id: modelId,
-        conversation_id: conversationId,
-        ok: true,
-      });
-      return NextResponse.json({ text });
+      groqError = data?.error?.message ?? `Groq returned ${response.status}`;
+    } catch (error) {
+      groqError = error instanceof Error ? error.message : "Groq request failed";
     }
-
-    if (modelId === "v3") {
-      // OpenAI (optional; may not be free)
-      const apiKey = process.env.OPENAI_API_KEY;
-      if (!apiKey) {
-        const text = cleanLocalAnswer(lastMessage);
-        await logToSupabase({
-          question: lastMessage,
-          answer: text,
-          model_id: modelId,
-          conversation_id: conversationId,
-          ok: false,
-          error: "Missing OPENAI_API_KEY",
-        });
-        return NextResponse.json({ text });
-      }
-
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model: "gpt-4o-mini",
-          messages: [
-            { role: "system", content: systemPrompt },
-            ...turns.map((m) => ({ role: toChatRole(m.sender), content: m.text })),
-          ],
-        }),
-      });
-
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        console.error("OpenAI API Error:", data);
-        const text = cleanLocalAnswer(lastMessage);
-        await logToSupabase({
-          question: lastMessage,
-          answer: text,
-          model_id: modelId,
-          conversation_id: conversationId,
-          ok: false,
-          error: `OpenAI: ${data?.error?.message || "Unknown error"}`,
-        });
-        return NextResponse.json({ text });
-      }
-
-      const text = data.choices?.[0]?.message?.content || cleanLocalAnswer(lastMessage);
-      await logToSupabase({
-        question: lastMessage,
-        answer: text,
-        model_id: modelId,
-        conversation_id: conversationId,
-        ok: true,
-      });
-      return NextResponse.json({ text });
-    }
-
-    // Unknown modelId -> fall back locally (never break chat)
-    {
-      const text = cleanLocalAnswer(lastMessage);
-      await logToSupabase({
-        question: lastMessage,
-        answer: text,
-        model_id: modelId,
-        conversation_id: conversationId,
-        ok: false,
-        error: "Unknown modelId",
-      });
-      return NextResponse.json({ text });
-    }
-  } catch (error) {
-    console.error("Chat API Error:", error);
-    return NextResponse.json({ text: "Internal Server Error" }, { status: 500 });
+  } else {
+    groqError = "Missing GROQ_API_KEY";
   }
+
+  console.error("Groq unavailable; trying Gemini:", groqError);
+  const geminiKey = process.env.GEMINI_API_KEY;
+
+  if (geminiKey) {
+    try {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${geminiKey}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{
+              role: "user",
+              parts: [{ text: `${systemPrompt}\n\nConversation:\n${chatMessages.map((message) => `${message.role}: ${message.content}`).join("\n")}` }],
+            }],
+          }),
+        },
+      );
+      const data = await response.json().catch(() => ({}));
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+      if (response.ok && text) {
+        await logChat({ conversationId, question, answer: text, modelId: "gemini", ok: true });
+        return NextResponse.json({ text });
+      }
+      throw new Error(data?.error?.message ?? `Gemini returned ${response.status}`);
+    } catch (error) {
+      console.error("Gemini fallback failed:", error);
+      const text = localAnswer(question);
+      await logChat({
+        conversationId,
+        question,
+        answer: text,
+        modelId: "local",
+        ok: false,
+        error: `${groqError}; ${error instanceof Error ? error.message : "Gemini request failed"}`,
+      });
+      return NextResponse.json({ text });
+    }
+  }
+
+  const text = localAnswer(question);
+  await logChat({ conversationId, question, answer: text, modelId: "local", ok: false, error: `${groqError}; Missing GEMINI_API_KEY` });
+  return NextResponse.json({ text });
 }
