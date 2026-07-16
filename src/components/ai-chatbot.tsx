@@ -6,7 +6,6 @@ import {
   MessageCircle,
   X,
   Send,
-  Sparkles,
   ChevronDown,
 } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -14,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
+import Image from "next/image";
 import { ConfettiButton } from "@/registry/magicui/confetti";
 import toast from "react-hot-toast";
 
@@ -196,8 +196,14 @@ export default function AIChatbot() {
             <div className="p-5 bg-primary/5 border-b border-primary/10 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="size-11 rounded-full bg-gradient-to-tr from-primary/20 to-primary/5 flex items-center justify-center border border-primary/20">
-                    <Sparkles className="size-6 text-primary" />
+                  <div className="size-11 overflow-hidden rounded-full border border-primary/20">
+                    <Image
+                      src="/avatar.jpg"
+                      alt={`${DATA.name}'s avatar`}
+                      width={44}
+                      height={44}
+                      className="size-full object-cover"
+                    />
                   </div>
                   <div className="absolute bottom-0 right-0 size-3.5 bg-green-500 rounded-full border-2 border-card"></div>
                 </div>
@@ -238,7 +244,14 @@ export default function AIChatbot() {
                         : "bg-background/40 text-foreground/90 border border-primary/5 rounded-tl-none backdrop-blur-md"
                     )}
                   >
-                    <ReactMarkdown className="prose prose-sm dark:prose-invert prose-p:leading-relaxed prose-pre:bg-black/50 prose-pre:p-2 prose-code:text-primary">
+                    <ReactMarkdown
+                      className={cn(
+                        "prose prose-sm prose-p:leading-relaxed prose-pre:bg-black/50 prose-pre:p-2",
+                        message.sender === "user"
+                          ? "text-white prose-p:text-white prose-strong:text-white prose-em:text-white prose-code:text-white prose-a:text-white"
+                          : "dark:prose-invert prose-code:text-primary"
+                      )}
+                    >
                       {message.text}
                     </ReactMarkdown>
                   </div>
