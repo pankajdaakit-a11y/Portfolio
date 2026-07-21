@@ -211,7 +211,7 @@ export default function Page() {
                       >
                         <Button asChild size="default" className="group rounded-full w-full py-3 px-5 text-lg sm:px-8 lg:px-10 font-black shadow-xl shadow-orange-500/20 bg-[#f97015] text-white hover:bg-[#f97015]/90 hover:shadow-orange-500/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#f97015]/40 focus-visible:ring-offset-2 cursor-pointer h-full sm:h-12 lg:h-14 text-[10px] sm:text-base lg:text-lg transition-all duration-300 ease-out">
                           <Link
-                            href="https://drive.google.com/file/d/14vrnmva1bPtE5pJ771xeP6tR1XcMyFUl/view?usp=sharing"
+                            href="https://drive.google.com/file/d/1MgWAVuATbqZ6tZrnKP7bqKOckXv3ZWQp/view?usp=sharing"
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => {
@@ -662,7 +662,7 @@ export default function Page() {
                         </Link>
                       </Button>
                       <Button asChild variant="outline" className="rounded-full border-[#f97015] text-[#f97015] px-8 py-6 font-black hover:bg-[#f97015]/5 transition-all group/freelance text-[10px] sm:text-base">
-                        <a href="https://pvcode1u.ai" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                        <a href="https://pvcode1u.netlify.app/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                           🚀 Freelance Inquiry
                         </a>
                       </Button>

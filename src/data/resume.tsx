@@ -4,7 +4,7 @@ import { HomeIcon } from "lucide-react";
 export const DATA = {
   name: "Pankaj",
   initials: "PV",
-  url: "https://pvcode.netlify.app",
+  url: "https://devpankajverma.netlify.app/",
   location: "Noida, Sector 15, Uttar Pradesh, India",
   locationLink: "https://maps.app.goo.gl/dFLbinrTMVHjkjcHA",
   role: "Developer | Tech Creator",
@@ -127,7 +127,7 @@ export const DATA = {
       },
       LinkedIn: {
         name: "LinkedIn",
-        url: "https://www.linkedin.com/in/pankaj-verma-8a99a723a/",
+        url: "https://www.linkedin.com/in/devpankajverma/",
         icon: Icons.linkedin,
 
         navbar: true,
