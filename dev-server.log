@@ -1,0 +1,37 @@
+
+> porfolio@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.4
+  - Local:        http://localhost:3000
+  - Environments: .env
+
+ ✓ Starting...
+[TypeError: fetch failed] {
+  [cause]: AggregateError [EACCES]: 
+      at internalConnectMultiple (node:net:1193:18)
+      at afterConnectMultiple (node:net:1783:7) {
+    code: 'EACCES',
+    [errors]: [
+      [Error], [Error],
+      [Error], [Error],
+      [Error], [Error],
+      [Error], [Error],
+      [Error], [Error],
+      [Error], [Error]
+    ]
+  }
+}
+ ✓ Ready in 5.6s
+ ○ Compiling / ...
+ ✓ Compiled /_not-found in 48.2s (3094 modules)
+ GET / 200 in 25975ms
+ GET / 200 in 20009ms
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /_next/static/webpack/f305fc33ec629d90.webpack.hot-update.json 404 in 49045ms
+ GET / 200 in 51077ms
+ GET / 200 in 324ms
+ GET / 200 in 196ms
+ GET / 200 in 362ms
+ GET / 200 in 266ms
+ ✓ Compiled in 4.7s (3091 modules)

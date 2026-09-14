@@ -190,7 +190,7 @@ export default function Page() {
                       ))}
                     </motion.div>
 
-                    <motion.div
+                    {/* <motion.div
                       initial="hidden"
                       whileInView="visible"
                       viewport={{ once: true }}
@@ -243,7 +243,7 @@ export default function Page() {
                           <Layout className="size-3 sm:size-5 lg:size-6 transition-transform duration-300 group-hover:rotate-3 group-hover:scale-110" /> Gallery
                         </Button>
                       </motion.div>
-                    </motion.div>
+                    </motion.div> */}
 
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
@@ -428,6 +428,7 @@ export default function Page() {
                         badges={work.badges}
                         period={`${work.start} - ${work.end ?? "Present"}`}
                         description={work.description}
+                        
                       />
                     ))}
                   </div>

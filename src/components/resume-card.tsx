@@ -33,26 +33,36 @@ export const ResumeCard = ({
   className,
 }: ResumeCardProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
+  const hasWebsite = Boolean(href && href !== "#");
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const toggleExpanded = () => {
+    if (description) setIsExpanded((expanded) => !expanded);
+  };
+
+  const handleCardClick = () => {
     if (description) {
-      e.preventDefault();
-      setIsExpanded(!isExpanded);
+      toggleExpanded();
+    } else if (hasWebsite && href) {
+      window.location.assign(href);
     }
   };
 
   return (
-    <Link
-      href={href || "#"}
-      className="block cursor-pointer"
-      onClick={handleClick}
-    >
+    <div className="block">
       <Card className={cn(
         "group flex flex-col sm:flex-row p-4 sm:p-5 transition-all duration-300 hover:shadow-md bg-card/40 backdrop-blur-xl border border-border/40 rounded-xl hover:border-primary/40",
+        (description || hasWebsite) && "cursor-pointer",
         className
       )}
-      role="button"
-      tabIndex={0}
+      role={description || hasWebsite ? "button" : undefined}
+      tabIndex={description || hasWebsite ? 0 : undefined}
+      onClick={handleCardClick}
+      onKeyDown={(event) => {
+        if ((description || hasWebsite) && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          handleCardClick();
+        }
+      }}
       >
         {/* Logo Section */}
         <div className="flex-none flex justify-start sm:justify-start mb-4 sm:mb-0">
@@ -150,13 +160,21 @@ export const ResumeCard = ({
                 </p>
                 {href && href !== "#" && (
                   <div className="mt-2">
-                    <Badge
-                      variant="outline"
-                      className="text-xs gap-1 hover:bg-secondary transition-colors"
+                    <Link
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex"
+                      onClick={(event) => event.stopPropagation()}
                     >
-                      <ExternalLink className="size-3" />
-                      Visit Website
-                    </Badge>
+                      <Badge
+                        variant="outline"
+                        className="text-xs gap-1 hover:bg-secondary transition-colors"
+                      >
+                        <ExternalLink className="size-3" />
+                        Visit Website
+                      </Badge>
+                    </Link>
                   </div>
                 )}
               </motion.div>
@@ -183,6 +201,6 @@ export const ResumeCard = ({
           )}
         </div>
       </Card>
-    </Link>
+    </div>
   );
 };
