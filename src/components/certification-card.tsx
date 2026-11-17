@@ -43,7 +43,7 @@ export function CertificationCard({ cert }: CertificationCardProps) {
               {cert.title}
             </h3>
             {(cert.status === "completed" || cert.verified) && (
-              <CheckCircle2 className="size-5 text-green-500 fill-green-500/10 shrink-0" />
+              <CheckCircle2 className="size-5 text-green-500 mb-8 fill-green-500/10 shrink-0" />
             )}
           </div>
           <p className="text-sm text-foreground line-clamp-1 font-bold">

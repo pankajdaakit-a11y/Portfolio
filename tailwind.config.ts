@@ -23,7 +23,15 @@ const config = {
         xs: "400px",
       },
       fontFamily: {
-        sans: ["'Uncut Sans'", "var(--font-sans)", ...fontFamily.sans],
+        sans: [
+          "Inter",
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          ...fontFamily.sans,
+        ],
       },
       colors: {
         border: "hsl(var(--border))",

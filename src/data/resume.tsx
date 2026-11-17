@@ -160,12 +160,12 @@ export const DATA = {
       company: "Daakit Technologies Pvt Ltd",
       href: "https://daakit.com/",
       badges: ["Full-time"],
-      location: "Delhi",
-      title: "Software Engineer",
+      location: "Hybrid",
+      title: "Full Stack Engineer",
       logoUrl: "/image.png",
       start: "April 2026",
       end: "Present",
-      description: "Optimizing logistics platform efficiency and architecting scalable backend solutions. Focused on streamlining supply chain workflows, improving data processing pipelines, and delivering high-performance features for logistics operations.",
+      description: "Built and developed three logistics products: DAAKitGo for quick commerce and delivery, the PHP-based DAAKit One platform for logistics operations, and DAAKit VAULT, a warehouse management system (WMS) for inventory, orders, and fulfillment. Developed scalable backend features, streamlined operational workflows, and improved platform performance across the products.",
     },
     // {
     //   company: "Quality Concept Welding Solutions Pvt. Ltd.",
@@ -183,7 +183,7 @@ export const DATA = {
       href: "https://websbaba.in/",
       badges: ["Full-time"],
       location: "Lucknow, India (Hybrid)",
-      title: "Full Stack Developer (Real Estate Platform)",
+      title: "MERN Stack Developer",
       logoUrl: "/webs_baba_logo.png",
       start: "Apr 2025", 
       end: "Mar 2026",
@@ -194,7 +194,7 @@ export const DATA = {
       href: "https://www.marvsoftwares.com/",
       badges: ["Intern"],
       location: "Lucknow, India (Hybrid)",
-      title: "Full Stack Developer Intern",
+      title: "Full Stack Developer",
       logoUrl: "/waterloo.jpg",
       start: "Jan 2025",
       end: "Mar 2025",
@@ -242,6 +242,80 @@ export const DATA = {
     }
   ],
   projects: [
+    {
+      title: "DAAKitGo — Quick Commerce & Delivery Platform",
+      href: "https://go.daakit.com/login",
+      dates: "Live Product",
+      active: true,
+      description:
+        "A quick-commerce logistics platform connecting merchants, fleet partners, and customers. The merchant and fleet portals support account access for managing flexible fulfillment and hyperlocal delivery operations, with 30–60 minute and same/next-day delivery options.",
+      technologies: [
+        "Quick Commerce",
+        "Merchant Portal",
+        "Fleet Operations",
+        "Hyperlocal Delivery",
+        "Fulfillment"
+      ],
+      links: [
+        {
+          type: "Merchant Login",
+          href: "https://go.daakit.com/login",
+          icon: <Icons.globe className="size-3" />,
+        }
+      ],
+      image: "/images/daakitgo-login.png",
+      video: "",
+      blueprint: "web_app_architecture.svg"
+    },
+    {
+      title: "DAAKit VAULT — Warehouse Management System",
+      href: "https://staging.vault.daakit.com/",
+      dates: "Live Product",
+      active: true,
+      description:
+        "A warehouse management system (WMS) for setting up and managing inventory, orders, and fulfillment operations. The live onboarding flow guides operators through creating an account and configuring their warehouse operations.",
+      technologies: [
+        "Warehouse Management",
+        "WMS",
+        "Inventory",
+        "Order Fulfillment",
+        "Operator Onboarding"
+      ],
+      links: [
+        {
+          type: "VAULT Setup",
+          href: "https://staging.vault.daakit.com/",
+          icon: <Icons.globe className="size-3" />,
+        }
+      ],
+      image: "/images/daakit-vault-setup.png",
+      video: "",
+      blueprint: "web_app_architecture.svg"
+    },
+    {
+      title: "DAAKit One — Logistics Platform",
+      href: "https://app.daakit.com/",
+      dates: "Live Product",
+      active: true,
+      description:
+        "A logistics platform with a member portal for accessing logistics operations. The live application provides the DAAKit One sign-in experience for platform members.",
+      technologies: [
+        "PHP",
+        "Logistics Platform",
+        "Member Portal",
+        "Operations"
+      ],
+      links: [
+        {
+          type: "DAAKit One",
+          href: "https://app.daakit.com/",
+          icon: <Icons.globe className="size-3" />,
+        }
+      ],
+      image: "/images/daakit-one-login.png",
+      video: "",
+      blueprint: "web_app_architecture.svg"
+    },
     {
       title: "Healthcare Portal – Hospital Appointment System",
       href: "https://hummarichikitsa.vercel.app/",

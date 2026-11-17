@@ -7,6 +7,7 @@ import {
   X,
   Send,
   ChevronDown,
+  Download,
 } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -77,7 +78,7 @@ export default function AIChatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      text: `Hi! I'm **${DATA.name}'s AI Assistant**. How can I help you today? \n\nI can tell you about my **1.5+ years of experience**, skills in **React/Node.js**, or show you my latest projects!`,
+      text: `Hi! I'm **${DATA.name}'s AI Assistant**. How can I help you today? \n\nI can tell you about my **2+ years of experience**, skills in **React/Node.js**, or my work on **DAAKitGo**, **DAAKit One**, and **DAAKit VAULT WMS**.`,
       sender: "ai",
     },
   ]);
@@ -376,6 +377,14 @@ export default function AIChatbot() {
                   </ConfettiButton>
                 </div>
               </form>
+              <a
+                href="/resuma/resuma_pv.pdf"
+                download
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-primary/20 bg-primary/5 px-4 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              >
+                <Download className="size-4" />
+                Download Resume
+              </a>
               <div className="flex flex-col items-center gap-1 mt-4">
                 <p className="text-[11px] font-black text-foreground/40 uppercase tracking-[0.15em] whitespace-nowrap">
                    Powered by Groq with Gemini fallback

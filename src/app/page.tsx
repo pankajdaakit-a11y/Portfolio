@@ -190,6 +190,8 @@ export default function Page() {
                       ))}
                     </motion.div>
 
+                   
+
                     {/* <motion.div
                       initial="hidden"
                       whileInView="visible"
@@ -284,6 +286,8 @@ export default function Page() {
                           {DATA.contact.tel}
                         </span>
                       </Link>
+
+                      
                     </motion.div>
 
                     <motion.div
@@ -306,7 +310,17 @@ export default function Page() {
                           </a>
                         );
                       })}
+
+                      
                     </motion.div>
+
+                     <div className="hidden lg:flex w-full justify-center sm:justify-start">
+                      <Button asChild className="rounded-full gap-2 bg-primary text-primary-foreground hover:bg-primary/90 px-6 font-semibold shadow-md shadow-primary/15">
+                        <a href="/resuma/resuma_pv.pdf" download>
+                          Download Resume <Download className="size-4" />
+                        </a>
+                      </Button>
+                    </div>
 
                     {/* Mobile Avatar Mascot */}
                     <motion.div
@@ -365,7 +379,7 @@ export default function Page() {
                     </Markdown>
                   </motion.div>
 
-                  <div className="relative pl-8 space-y-10 before:absolute before:inset-0 before:left-0 before:h-full before:w-[2px] before:bg-gradient-to-b before:from-primary before:via-orange-400 before:to-transparent">
+                  <div className="relative pl-8 space-y-10 before:absolute before:inset-y-0 before:left-[7px] before:w-[2px] before:rounded-full before:bg-gradient-to-b before:from-primary before:via-orange-400 before:to-transparent">
                     {(DATA as any).timeline?.map((item: any, idx: number) => {
                       const Icon = {
                         CheckCircle2: CheckCircle2,
@@ -382,7 +396,7 @@ export default function Page() {
                           transition={{ delay: idx * 0.1 }}
                           className="relative"
                         >
-                          <div className="absolute -left-[37px] top-1 size-4 rounded-full bg-background border-2 border-primary flex items-center justify-center">
+                          <div className="absolute -left-8 top-1 size-4 rounded-full bg-background border-2 border-primary flex items-center justify-center shadow-[0_0_0_3px_hsl(var(--background))]">
                             <div className="size-1.5 rounded-full bg-primary" />
                           </div>
                           <div className="space-y-1">
@@ -413,7 +427,7 @@ export default function Page() {
                   <div className="flex items-center justify-between border-b border-primary/10 pb-4">
                     <h2 className="text-xl sm:text-2xl font-black text-foreground uppercase tracking-tight">Work <span className="text-primary italic">History</span></h2>
                     <Badge variant="secondary" className="bg-primary/10 text-primary font-bold text-[15px] sm:text-xs">
-                      1.5  year + experience
+                      2 years+ experience
                     </Badge>
                   </div>
                   <div className="space-y-4">
@@ -467,7 +481,7 @@ export default function Page() {
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-primary/10 pb-6">
                     <div className="space-y-1">
                       <h2 className="text-2xl sm:text-3xl font-black text-foreground">Certifications</h2>
-                      <p className="text-sm text-foreground/70 font-medium italic">Industry recognized credentials & skill validations.</p>
+                      <p className="text-black  font-semibold">Industry recognized credentials & skill validations.</p>
                     </div>
                     <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground px-3 py-1.5 rounded-full bg-secondary/20">
                       <CheckCircle2 className="size-3 text-green-500 fill-green-500/10" />
@@ -501,7 +515,7 @@ export default function Page() {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {(DATA.projects as readonly any[]).slice(0, 3).map((project, id) => (
+                    {(DATA.projects as readonly any[]).map((project, id) => (
                       <motion.div
                         key={project.title}
                         initial={{ opacity: 0, scale: 0.95 }}
@@ -525,13 +539,6 @@ export default function Page() {
                     ))}
                   </div>
 
-                  <div className="flex justify-center mt-12 pb-4">
-                    <Link href="/projects">
-                      <Button variant="outline" className="rounded-2xl gap-2 font-black text-[10px] uppercase tracking-widest bg-primary/5 border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all shadow-xl px-12 py-7 h-auto">
-                        View Full Archive <ArrowUpRight className="size-5" />
-                      </Button>
-                    </Link>
-                  </div>
                 </div>
               </section>
             </AnimeReveal>
@@ -647,27 +654,6 @@ export default function Page() {
                         Looking for freelancing services? Visit <a href="https://pvcode1u.ai" target="_blank" className="text-primary font-bold hover:underline hover:text-primary/80 hover:text-lg">pvcode1u.ai</a>
                       </span>
                     </p>
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-                      <Button asChild className="rounded-full bg-[#f97015] hover:bg-[#f97015]/90 text-white px-8 py-6 font-black shadow-lg shadow-orange-500/20 group/email">
-
-                        <Link
-                          href={`mailto:${DATA.contact.email}`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            copyContact(DATA.contact.email, "Email");
-                          }}
-                          className="flex items-center gap-2 text-[10px] sm:text-base cursor-copy"
-                        >
-                          <MailIcon />
-                          Email Me
-                        </Link>
-                      </Button>
-                      <Button asChild variant="outline" className="rounded-full border-[#f97015] text-[#f97015] px-8 py-6 font-black hover:bg-[#f97015]/5 transition-all group/freelance text-[10px] sm:text-base">
-                        <a href="https://pvcode1u.netlify.app/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                          🚀 Freelance Inquiry
-                        </a>
-                      </Button>
-                    </div>
                   </motion.div>
                 </div>
               </section>
