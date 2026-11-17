@@ -160,7 +160,7 @@ export default function Page() {
                             </span>
                           </span>
                           <span className="block lg:inline">
-                            A Software Tinkerer
+                            Software Engineer (SDE-1)
                           </span>
                         </h1>
                       </div>

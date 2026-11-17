@@ -7,11 +7,11 @@ export const DATA = {
   url: "https://devpankajverma.netlify.app/",
   location: "Noida, Sector 15, Uttar Pradesh, India",
   locationLink: "https://maps.app.goo.gl/dFLbinrTMVHjkjcHA",
-  role: "Developer | Tech Creator",
-  subtitle: "Building the future with Code",
-  description: "I'm a web developer based in Delhi, India, blending aesthetics with problem-solving to craft seamless digital experiences.",
+  role: "Software Engineer (SDE-1) | Tech Creator",
+  subtitle: "Building real-world products with code",
+  description: "Software Engineer (SDE-1) with 2+ years of experience building scalable, production-ready web applications. I specialize in React, Node.js, Express.js, and MongoDB, and explore system design, AI, automation, and DSA.",
   summary:
-  "Full Stack Web Developer passionate about building fast, scalable, and user-friendly web applications with the MERN stack. Always learning, solving problems, and creating impactful digital experiences. 🚀",
+  "Software Engineer (SDE-1) at DAAKit Technologies with 2+ years of experience in full-stack development. I build logistics, delivery, mobility, and business management platforms with a focus on clean architecture, intuitive interfaces, and performance. I work with the MERN stack and PHP, and continue exploring AI, automation, system design, cloud technologies, and data structures and algorithms. My goal is to build useful products that solve real-world problems at scale.",
 
   avatarUrl: "/me.png",
   nowBuilding: [
@@ -56,7 +56,7 @@ export const DATA = {
   { year: "2023", title: "Started Coding Journey", description: "Mastered HTML/CSS and basic Javascript.", icon: "CheckCircle2" },
   { year: "2024", title: "MERN Stack Era", description: "Built 10+ full-stack projects using React, Node, and MongoDB.", icon: "Briefcase" },
   { year: "2025", title: "Full Stack Developer", description: "Professional experience building scalable production apps.", icon: "CheckCircle2" },
-  { year: "2026", title: "Software Engineer @ Daakit Technologies", description: "Optimizing logistics platform efficiency and architecting scalable backend solutions for supply chain operations.", icon: "Sparkles" }
+  { year: "2026", title: "Software Engineer (SDE-1) @ DAAKit Technologies", description: "Building scalable logistics, mobility, and quick-commerce products, including DAAKitGo, DAAKit One, and DAAKit VAULT WMS.", icon: "Sparkles" }
 ],
   skills: {
     "Backend & Architecture": {
@@ -160,12 +160,12 @@ export const DATA = {
       company: "Daakit Technologies Pvt Ltd",
       href: "https://daakit.com/",
       badges: ["Full-time"],
-      location: "Hybrid",
-      title: "Full Stack Engineer",
+      location: "Gurugram, India (Hybrid)",
+      title: "Software Engineer (SDE-1)",
       logoUrl: "/image.png",
       start: "April 2026",
       end: "Present",
-      description: "Built and developed three logistics products: DAAKitGo for quick commerce and delivery, the PHP-based DAAKit One platform for logistics operations, and DAAKit VAULT, a warehouse management system (WMS) for inventory, orders, and fulfillment. Developed scalable backend features, streamlined operational workflows, and improved platform performance across the products.",
+      description: "Developing scalable logistics, mobility, and quick-commerce solutions. Building and maintaining full-stack applications with React.js, Node.js, Express.js, and MongoDB, alongside the PHP-based DAAKit One platform. Contributing to DAAKitGo for quick commerce and delivery, DAAKit One for logistics operations, and DAAKit VAULT WMS for inventory, orders, and fulfillment. Designing secure REST APIs, optimizing database performance, and collaborating with product, QA, and engineering teams to deliver production-ready features.",
     },
     // {
     //   company: "Quality Concept Welding Solutions Pvt. Ltd.",
@@ -183,22 +183,22 @@ export const DATA = {
       href: "https://websbaba.in/",
       badges: ["Full-time"],
       location: "Lucknow, India (Hybrid)",
-      title: "MERN Stack Developer",
+      title: "Full Stack Developer",
       logoUrl: "/webs_baba_logo.png",
       start: "Apr 2025", 
       end: "Mar 2026",
-      description: "Developed MERN dashboards with role-based access. Integrated Razorpay payments, auto-invoicing, and lead distribution. Improved frontend UI/UX and backend API efficiency.",
+      description: "Developed and maintained MERN stack applications for business clients. Built responsive user interfaces, integrated backend APIs, and implemented authentication, dashboards, and admin management systems. Improved application performance, scalability, and user experience.",
     },
     {
       company: "Marv Softwares Pvt. Ltd.",
       href: "https://www.marvsoftwares.com/",
-      badges: ["Intern"],
+      badges: ["Internship"],
       location: "Lucknow, India (Hybrid)",
-      title: "Full Stack Developer",
+      title: "Full Stack Developer Intern",
       logoUrl: "/waterloo.jpg",
       start: "Jan 2025",
       end: "Mar 2025",
-      description: "Developed MERN features and integrated REST APIs. Enhanced UI/UX performance and responsiveness. Implemented Stripe Connect payments and payout systems.",
+      description: "Assisted in developing and maintaining web applications, building React.js interfaces, and integrating backend APIs. Contributed to debugging, testing, and deployment while gaining hands-on experience across the software development lifecycle.",
     },
   ],
 
